@@ -3,6 +3,8 @@ package com.employeemanagement.backend.service;
 import com.employeemanagement.backend.dto.DepartmentRequestDTO;
 import com.employeemanagement.backend.dto.DepartmentResponseDTO;
 import com.employeemanagement.backend.entity.Department;
+import com.employeemanagement.backend.exception.DepartmentAlreadyExistsException;
+import com.employeemanagement.backend.exception.DepartmentNotFoundException;
 import com.employeemanagement.backend.mapper.DepartmentMapper;
 import com.employeemanagement.backend.repository.DepartmentRepository;
 import org.junit.jupiter.api.Test;
@@ -130,12 +132,12 @@ public class DepartmentServiceTest {
 
         // When
         RuntimeException exception = assertThrows(
-                RuntimeException.class,
+                DepartmentAlreadyExistsException.class,
                 () -> departmentService.createDepartment(requestDTO)
         );
 
         // Then
-        assertEquals("Department already exists", exception.getMessage());
+        assertEquals("Department already exists with name: "+requestDTO.getName(), exception.getMessage());
         verify(departmentRepository).existsByName("IT");
         verify(departmentMapper, never()).toEntity(any());
         verify(departmentRepository, never()).save(any());
@@ -189,7 +191,7 @@ public class DepartmentServiceTest {
 
         // When
         RuntimeException exception = assertThrows(
-                RuntimeException.class,
+                DepartmentNotFoundException.class,
                 () -> departmentService.updateDepartment(departmentId, requestDTO)
         );
 
@@ -226,7 +228,7 @@ public class DepartmentServiceTest {
 
         // When
         RuntimeException exception = assertThrows(
-                RuntimeException.class,
+                DepartmentNotFoundException.class,
                 () -> departmentService.deleteDepartment(departmentId)
         );
 
@@ -274,7 +276,7 @@ public class DepartmentServiceTest {
 
         // When
         RuntimeException exception = assertThrows(
-                RuntimeException.class,
+                DepartmentNotFoundException.class,
                 () -> departmentService.getDepartmentById(departmentId)
         );
 
