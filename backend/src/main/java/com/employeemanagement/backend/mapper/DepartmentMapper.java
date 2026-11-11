@@ -4,9 +4,12 @@ import com.employeemanagement.backend.dto.DepartmentRequestDTO;
 import com.employeemanagement.backend.dto.DepartmentResponseDTO;
 import com.employeemanagement.backend.entity.Department;
 import org.springframework.stereotype.Component;
+
 @Component
 public class DepartmentMapper {
+
     // Convertir un DTO en entité
+
     /**
      * Convert a DepartmentRequestDTO to a Department entity.
      *
@@ -21,6 +24,7 @@ public class DepartmentMapper {
     }
 
     // Convertir une entité en DTO
+
     /**
      * Convert a Department entity to a DepartmentResponseDTO.
      *
